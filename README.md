@@ -102,7 +102,6 @@ iiot-scada-temperature-alert-system/
 │   ├── dashboard.png
 │   ├── email.png
 │   └── modbus.png
-
 ---
 
 ## 👨‍💻 Author
