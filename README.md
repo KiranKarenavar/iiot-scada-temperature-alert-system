@@ -84,6 +84,27 @@ To avoid repeated alerts, a **state-based logic** is implemented:
 
 ---
 
+iiot-scada-temperature-alert-system/
+│
+├── README.md
+├── report/
+│   └── iiot_scada_temperature_report.pdf
+│
+├── flows/
+│   └── flows.json
+│
+├── modbus/
+│   └── modbus_server.py
+│
+├── images/
+│   ├── scada.png
+│   ├── flow.png
+│   ├── dashboard.png
+│   ├── email.png
+│   └── modbus.png
+
+---
+
 ## 👨‍💻 Author
 
 **Kiran Karenavar**
