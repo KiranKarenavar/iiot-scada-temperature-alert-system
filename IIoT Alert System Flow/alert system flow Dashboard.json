@@ -1,0 +1,385 @@
+[
+    {
+        "id": "160123621aba09e5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9be9e2bc7a407303",
+        "type": "ui_switch",
+        "z": "160123621aba09e5",
+        "name": "",
+        "label": "Moror Control",
+        "tooltip": "Turn Motor ON/OFF",
+        "group": "b1c0588692e2a7a4",
+        "order": 0,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "\"motor\"",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "0cc20911e313d164"
+            ]
+        ]
+    },
+    {
+        "id": "52d76e348deb810a",
+        "type": "ui_gauge",
+        "z": "160123621aba09e5",
+        "name": "",
+        "group": "b1c0588692e2a7a4",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f684e50c120f94dd",
+        "type": "modbus-read",
+        "z": "160123621aba09e5",
+        "name": "Temperature Read",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "0",
+        "dataType": "HoldingRegister",
+        "adr": "1",
+        "quantity": "1",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "dd5d1b7cf858946b",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [],
+            [
+                "8d87c65f39b74c4e",
+                "de3bc42fe5440fe5"
+            ]
+        ]
+    },
+    {
+        "id": "0cc20911e313d164",
+        "type": "modbus-write",
+        "z": "160123621aba09e5",
+        "name": "Motor Write",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "0",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "server": "dd5d1b7cf858946b",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": true,
+        "startDelayTime": "0",
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "de3bc42fe5440fe5",
+        "type": "function",
+        "z": "160123621aba09e5",
+        "name": "function 1",
+        "func": "msg.payload = msg.payload.data[0];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 200,
+        "wires": [
+            [
+                "52d76e348deb810a"
+            ]
+        ]
+    },
+    {
+        "id": "201b32f730f61e50",
+        "type": "modbus-read",
+        "z": "160123621aba09e5",
+        "name": "",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "0",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "dd5d1b7cf858946b",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [],
+            [
+                "863331f44760f395"
+            ]
+        ]
+    },
+    {
+        "id": "863331f44760f395",
+        "type": "function",
+        "z": "160123621aba09e5",
+        "name": "function 2",
+        "func": "let val;\n\n// Handle both formats\nif (msg.payload.data) {\n    val = msg.payload.data[0];\n} else if (Array.isArray(msg.payload)) {\n    val = msg.payload[0];\n} else {\n    val = msg.payload;\n}\n\n// Convert to ON/OFF text\nif (val == 1) {\n    msg.payload = \"🟢 Motor ON\";\n} else {\n    msg.payload = \"🔴 Motor OFF\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "9c65ed7059db4485"
+            ]
+        ]
+    },
+    {
+        "id": "9c65ed7059db4485",
+        "type": "ui_text",
+        "z": "160123621aba09e5",
+        "group": "b1c0588692e2a7a4",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Motor Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 430,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8d87c65f39b74c4e",
+        "type": "function",
+        "z": "160123621aba09e5",
+        "name": "function 3",
+        "func": "// handle different Modbus formats\n\nif (Array.isArray(msg.payload)) {\n    msg.payload = msg.payload[0];\n} \nelse if (msg.payload.data) {\n    msg.payload = msg.payload.data[0];\n}\n\nmsg.payload = Number(msg.payload);\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 320,
+        "wires": [
+            [
+                "1099844b1c0a03eb"
+            ]
+        ]
+    },
+    {
+        "id": "1099844b1c0a03eb",
+        "type": "switch",
+        "z": "160123621aba09e5",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "70",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 320,
+        "wires": [
+            [
+                "cf2f592fd7c7333a"
+            ]
+        ]
+    },
+    {
+        "id": "c2e8aa169d4a7a51",
+        "type": "e-mail",
+        "z": "160123621aba09e5",
+        "server": "smtp.gmail.com",
+        "port": "587",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": false,
+        "name": "kirankarenavar15@gmail.com",
+        "dname": "",
+        "x": 1310,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e25e94c13aa327f0",
+        "type": "function",
+        "z": "160123621aba09e5",
+        "name": "function 4",
+        "func": "msg.topic = \"🚨 IIoT ALERT: Machine Overheating\";\n\nmsg.payload = \"WARNING!\\n\\nTemperature exceeded limit.\\n\\nCurrent Temperature: \"\n+ msg.payload + \" °C\\n\\nImmediate action required.\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 460,
+        "wires": [
+            [
+                "c2e8aa169d4a7a51"
+            ]
+        ]
+    },
+    {
+        "id": "cf2f592fd7c7333a",
+        "type": "rbe",
+        "z": "160123621aba09e5",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1310,
+        "y": 320,
+        "wires": [
+            [
+                "e25e94c13aa327f0"
+            ]
+        ]
+    },
+    {
+        "id": "b1c0588692e2a7a4",
+        "type": "ui_group",
+        "name": "Control Panel",
+        "tab": "db0bf7da06554519",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dd5d1b7cf858946b",
+        "type": "modbus-client",
+        "name": "modbus",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "1502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "db0bf7da06554519",
+        "type": "ui_tab",
+        "name": "Factory-Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e2d9498cb056e8ae",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-modbus": "5.45.2",
+            "node-red-node-email": "5.2.1"
+        }
+    }
+]
