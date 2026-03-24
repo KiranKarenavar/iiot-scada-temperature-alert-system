@@ -83,6 +83,7 @@ To avoid repeated alerts, a **state-based logic** is implemented:
 * AI-based predictive maintenance
 
 ---
+
 iiot-scada-temperature-alert-system/
 │
 ├── README.md
@@ -101,6 +102,8 @@ iiot-scada-temperature-alert-system/
 │   ├── dashboard.png
 │   ├── email.png
 │   └── modbus.png
+
+
 ---
 
 ## 👨‍💻 Author
